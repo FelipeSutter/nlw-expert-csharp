@@ -1,5 +1,6 @@
 ﻿// igual o import
 using Microsoft.AspNetCore.Mvc;
+using RocketseatAuction.API.UseCases.Auctions.GetCurrent;
 
 // namespace eh tipo o pacote
 namespace RocketseatAuction.API.Controllers;
@@ -13,12 +14,13 @@ public class AuctionController : ControllerBase {
 
     [HttpGet]
     public IActionResult GetCurrentAuction() {
-        return Ok("Felipe Sutter");
-    }
 
-    [HttpGet]
-    public IActionResult Test() {
-        return Ok("Felipe Sutter");
+        var useCase = new GetCurrentAuctionUseCase();
+
+        var result = useCase.execute();
+
+        // statusCode.ok() passando o objeto result
+        return Ok(result);
     }
 
 }
