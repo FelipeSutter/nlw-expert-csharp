@@ -7,10 +7,12 @@ public class LoggedUser {
 
     private readonly IHttpContextAccessor _httpContextAssessor; // por ser uma variavel privada colocar _ no inicio
 
+    // Essa interface acessa o HttpContext da aplicacao 
     public LoggedUser(IHttpContextAccessor httpContext) {
         _httpContextAssessor = httpContext;
     }
 
+    // Método que recupera o email do usuario logado
     public User User () {
         var repository = new RocketseatAuctionDbContext();
 

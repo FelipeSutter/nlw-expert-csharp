@@ -9,6 +9,8 @@ public class CreateOfferUseCase {
 
     private readonly LoggedUser _loggedUser; // readonly significa que somente o construtor poderá mudar o valor da variavel
 
+    // Aqui é criado um construtor para createOffer contendo um usuario logado. Sempre que for criar um leilao,
+    // significa que o usuario já esta logado
     public CreateOfferUseCase(LoggedUser loggedUser) => _loggedUser = loggedUser;
 
     public int Execute(int itemId, RequestCreateOfferJson request) {

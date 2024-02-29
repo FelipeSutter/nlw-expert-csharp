@@ -16,6 +16,8 @@ public class OfferController : RocketseatAuctionBaseController {
         [FromBody] RequestCreateOfferJson request,
         [FromServices] CreateOfferUseCase useCase) {
 
+        //[FromServices] chama um metodo com injecao de dependecias
+
         var id = useCase.Execute(itemId, request);
         
         return Created(string.Empty, id);
