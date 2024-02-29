@@ -1,5 +1,6 @@
 ﻿// igual o import
 using Microsoft.AspNetCore.Mvc;
+using RocketseatAuction.API.Entities;
 using RocketseatAuction.API.UseCases.Auctions.GetCurrent;
 
 // namespace eh tipo o pacote
@@ -13,13 +14,19 @@ namespace RocketseatAuction.API.Controllers;
 public class AuctionController : ControllerBase {
 
     [HttpGet]
+    [ProducesResponseType(typeof(Auction), StatusCodes.Status200OK)] // configurando o swagger para ele mostrar um
+                                                                     // response do tipo Auction com o status code 200OK
+    [ProducesResponseType(StatusCodes.Status204NoContent)]           // status code 204 caso não tenha auction
     public IActionResult GetCurrentAuction() {
 
         var useCase = new GetCurrentAuctionUseCase();
 
-        var result = useCase.execute();
+        var result = useCase.Execute();
 
-        // statusCode.ok() passando o objeto result
+        if (result == null) {
+            return NoContent();
+        }
+
         return Ok(result);
     }
 
