@@ -1,24 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using RocketseatAuction.API.Repositories;
+using RocketseatAuction.API.Contracts;
 
 namespace RocketseatAuction.API.Filters;
 
 public class AuthenticationUserAttribute : AuthorizeAttribute, IAuthorizationFilter {
+    
+    private readonly IUserRepository _userRepository;
+    public AuthenticationUserAttribute(IUserRepository userRepository) => _userRepository = userRepository;
+    
     // Esse context eh toda a interface da minha requisição, como body, headers, parametros, tudo que tem na requisicao
     public void OnAuthorization(AuthorizationFilterContext context) {
         
         try {
             var token = TokenOnRequest(context.HttpContext);
 
-            var repository = new RocketseatAuctionDbContext();
-
             // pega o email ja convertido
             var email = FromBase64String(token);
 
             // verifica se existe um email na tabela de usuario com o mesmo email da variavel
-            var exist = repository.Users.Any(user => user.Email.Equals(email));
+            var exist = _userRepository.ExistUserWithEmail(email);
 
             if (exist == false) {
                 context.Result = new UnauthorizedObjectResult("E-mail not valid"); // exception

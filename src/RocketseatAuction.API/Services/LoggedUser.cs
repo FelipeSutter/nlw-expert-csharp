@@ -1,5 +1,5 @@
-﻿using RocketseatAuction.API.Entities;
-using RocketseatAuction.API.Repositories;
+﻿using RocketseatAuction.API.Contracts;
+using RocketseatAuction.API.Entities;
 
 namespace RocketseatAuction.API.Services;
 
@@ -7,20 +7,21 @@ public class LoggedUser {
 
     private readonly IHttpContextAccessor _httpContextAssessor; // por ser uma variavel privada colocar _ no inicio
 
+    private readonly IUserRepository _userRepository;
+
     // Essa interface acessa o HttpContext da aplicacao 
-    public LoggedUser(IHttpContextAccessor httpContext) {
+    public LoggedUser(IHttpContextAccessor httpContext, IUserRepository repository) {
         _httpContextAssessor = httpContext;
+        _userRepository = repository;
     }
 
     // Método que recupera o email do usuario logado
     public User User () {
-        var repository = new RocketseatAuctionDbContext();
-
         var token = TokenOnRequest();
 
         var email = FromBase64String(token);
 
-        return repository.Users.First(user => user.Email.Equals(email));
+        return _userRepository.GetUserByEmail(email);
     }
 
     private string TokenOnRequest() {

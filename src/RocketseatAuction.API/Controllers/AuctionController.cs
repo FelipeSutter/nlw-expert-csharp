@@ -17,9 +17,7 @@ public class AuctionController : RocketseatAuctionBaseController { // Agora o co
     [ProducesResponseType(typeof(Auction), StatusCodes.Status200OK)] // configurando o swagger para ele mostrar um
                                                                      // response do tipo Auction com o status code 200OK
     [ProducesResponseType(StatusCodes.Status204NoContent)]           // status code 204 caso não tenha auction
-    public IActionResult GetCurrentAuction() {
-
-        var useCase = new GetCurrentAuctionUseCase();
+    public IActionResult GetCurrentAuction([FromServices] GetCurrentAuctionUseCase useCase) {
 
         var result = useCase.Execute();
 

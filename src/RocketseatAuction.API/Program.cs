@@ -1,6 +1,9 @@
 using Microsoft.OpenApi.Models;
+using RocketseatAuction.API.Contracts;
 using RocketseatAuction.API.Filters;
+using RocketseatAuction.API.Repositories.DataAccess;
 using RocketseatAuction.API.Services;
+using RocketseatAuction.API.UseCases.Auctions.GetCurrent;
 using RocketseatAuction.API.UseCases.Offers.CreateOffer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,6 +44,11 @@ builder.Services.AddSwaggerGen(options => {
 builder.Services.AddScoped<AuthenticationUserAttribute>(); // configuracao para rodar o authentication criado
 builder.Services.AddScoped<LoggedUser>(); // serve para colocar uma injeção de dependencia
 builder.Services.AddScoped<CreateOfferUseCase>(); // essas configuracoes sao para colocar injecao de dependencia
+builder.Services.AddScoped<IAuctionRepository, AuctionRepository>(); // isso significa que sempre que usar a interface
+                                                                     // vai fazer uma instancia do auctionRepository tbm
+builder.Services.AddScoped<GetCurrentAuctionUseCase>();
+builder.Services.AddScoped<IOfferRepository, OfferRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddHttpContextAccessor();
 
