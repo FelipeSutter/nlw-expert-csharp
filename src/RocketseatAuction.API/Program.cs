@@ -1,6 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RocketseatAuction.API.Contracts;
 using RocketseatAuction.API.Filters;
+using RocketseatAuction.API.Repositories;
 using RocketseatAuction.API.Repositories.DataAccess;
 using RocketseatAuction.API.Services;
 using RocketseatAuction.API.UseCases.Auctions.GetCurrent;
@@ -49,6 +51,11 @@ builder.Services.AddScoped<IAuctionRepository, AuctionRepository>(); // isso sig
 builder.Services.AddScoped<GetCurrentAuctionUseCase>();
 builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+// Essa função diz onde está o banco de dados e configura ele para receber os dados da entidade
+builder.Services.AddDbContext<RocketseatAuctionDbContext>(options => {
+    options.UseSqlite("Data Source=C:\\devSerratec\\API_Restful\\workspace\\RocketseatAuction\\leilaoDbNLW.db");
+});
 
 builder.Services.AddHttpContextAccessor();
 
