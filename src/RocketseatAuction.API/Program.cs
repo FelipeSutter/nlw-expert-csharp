@@ -44,7 +44,7 @@ builder.Services.AddSwaggerGen(options => {
 });
 
 builder.Services.AddScoped<AuthenticationUserAttribute>(); // configuracao para rodar o authentication criado
-builder.Services.AddScoped<LoggedUser>(); // serve para colocar uma injeção de dependencia
+builder.Services.AddScoped<ILoggedUser, LoggedUser>(); // serve para colocar uma injeção de dependencia
 builder.Services.AddScoped<CreateOfferUseCase>(); // essas configuracoes sao para colocar injecao de dependencia
 builder.Services.AddScoped<IAuctionRepository, AuctionRepository>(); // isso significa que sempre que usar a interface
                                                                      // vai fazer uma instancia do auctionRepository tbm

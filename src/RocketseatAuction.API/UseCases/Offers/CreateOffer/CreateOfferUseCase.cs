@@ -7,13 +7,13 @@ namespace RocketseatAuction.API.UseCases.Offers.CreateOffer;
 
 public class CreateOfferUseCase {
 
-    private readonly LoggedUser _loggedUser; // readonly significa que somente o construtor poderá mudar o valor da variavel
+    private readonly ILoggedUser _loggedUser; // readonly significa que somente o construtor poderá mudar o valor da variavel
 
     private readonly IOfferRepository _offerRepository;
 
     // Aqui é criado um construtor para createOffer contendo um usuario logado. Sempre que for criar um leilao,
     // significa que o usuario já esta logado
-    public CreateOfferUseCase(LoggedUser loggedUser, IOfferRepository offerRepository) {
+    public CreateOfferUseCase(ILoggedUser loggedUser, IOfferRepository offerRepository) {
         _loggedUser = loggedUser;
         _offerRepository = offerRepository;
     }

@@ -3,7 +3,7 @@ using RocketseatAuction.API.Entities;
 
 namespace RocketseatAuction.API.Services;
 
-public class LoggedUser {
+public class LoggedUser : ILoggedUser {
 
     private readonly IHttpContextAccessor _httpContextAssessor; // por ser uma variavel privada colocar _ no inicio
 
